@@ -1,0 +1,31 @@
+name: "Create Linear Issue"
+description: "Creates a Linear Issue based on inputs"
+inputs:
+  linear-team-id:
+    description: "Team ID for the Linear issue."
+    required: true
+  linear-issue-title:
+    description: "Title for the Linear issue."
+    required: true
+  linear-issue-description:
+    description: "Description for the Linear issue."
+    required: true
+  linear-attachment-url:
+    description: "URL to attach to the Linear issue."
+  linear-attachment-title:
+    description: "Title of the URL attachment."
+outputs:
+  linear-issue-id:
+    description: "The unique identifier of the Linear issue."
+  linear-issue-identifier:
+    description: "The Linear issue's human readable identifier (e.g. ENG-123)."
+  linear-issue-title:
+    description: "The Linear issue's title."
+  linear-issue-url:
+    description: "The Linear issue's URL."
+runs:
+  using: "node12"
+  main: "dist/index.js"
+branding:
+  icon: "checklist"
+  color: "gray-dark"
