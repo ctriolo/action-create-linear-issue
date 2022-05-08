@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build --license licenses.txt",
     "all": "npm run format && npm run build && npm run package"
   },
   "keywords": [],

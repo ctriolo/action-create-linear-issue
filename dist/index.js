@@ -1,4 +1,4 @@
-require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 109:
@@ -6,12 +6,32 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __importDefault(__nccwpck_require__(186));
-const sdk_1 = __importDefault(__nccwpck_require__(851));
+const core = __importStar(__nccwpck_require__(186));
+const sdk_1 = __nccwpck_require__(851);
 /**
  * Creates an issue using the provided issue id and github action inputs
  * @param linearClient LinearClient instance
@@ -19,27 +39,27 @@ const sdk_1 = __importDefault(__nccwpck_require__(851));
  * @returns The newly created issue
  */
 const createIssue = async (linearClient) => {
-    const teamId = core_1.default.getInput("linear-team-id");
-    const issueTitle = core_1.default.getInput("linear-issue-title");
-    const issueDescription = core_1.default.getInput("linear-issue-description");
+    const teamId = core.getInput("linear-team-id");
+    const issueTitle = core.getInput("linear-issue-title");
+    const issueDescription = core.getInput("linear-issue-description");
     const issuePayload = await linearClient.issueCreate({
         teamId,
         title: issueTitle,
         description: issueDescription,
     });
     if (!issuePayload.success) {
-        core_1.default.setFailed(`Failed to create issue with team id: ${teamId} and issue title: ${issueTitle}`);
+        core.setFailed(`Failed to create issue with team id: ${teamId} and issue title: ${issueTitle}`);
         return null;
     }
     const issue = await issuePayload.issue;
     if (!issue) {
-        core_1.default.setFailed(`Failed to load recently created linear issue.`);
+        core.setFailed(`Failed to load recently created linear issue.`);
         return null;
     }
-    core_1.default.setOutput("linear-issue-id", issue.id);
-    core_1.default.setOutput("linear-issue-title", issue.title);
-    core_1.default.setOutput("linear-issue-identifier", issue.identifier);
-    core_1.default.setOutput("linear-issue-url", issue.url);
+    core.setOutput("linear-issue-id", issue.id);
+    core.setOutput("linear-issue-title", issue.title);
+    core.setOutput("linear-issue-identifier", issue.identifier);
+    core.setOutput("linear-issue-url", issue.url);
     return await issue;
 };
 /**
@@ -49,8 +69,8 @@ const createIssue = async (linearClient) => {
  * @returns The newly created attachment
  */
 const createAttachment = async (linearClient, issueId) => {
-    const attachmentTitle = core_1.default.getInput("linear-attachment-title");
-    const attachmentUrl = core_1.default.getInput("linear-attachment-url");
+    const attachmentTitle = core.getInput("linear-attachment-title");
+    const attachmentUrl = core.getInput("linear-attachment-url");
     if (!attachmentUrl) {
         return null;
     }
@@ -60,26 +80,29 @@ const createAttachment = async (linearClient, issueId) => {
         url: attachmentUrl,
     });
     if (!attachmentPayload.success) {
-        core_1.default.setFailed(`Failed to create Linear URL attachment.`);
+        core.setFailed(`Failed to create Linear URL attachment.`);
         return null;
     }
     const attachment = await attachmentPayload.attachment;
     if (!attachment) {
-        core_1.default.setFailed(`Failed to load recently created Linear URL attachment.`);
+        core.setFailed(`Failed to load recently created Linear URL attachment.`);
         return null;
     }
     return attachment;
 };
 const main = async () => {
-    const apiKey = "test";
-    const linearClient = new sdk_1.default.LinearClient({ apiKey });
-    //  const apiKey = core.getInput("linear-api-key");
-    const issue = await createIssue(linearClient);
-    if (!issue) {
-        return;
+    try {
+        const apiKey = core.getInput("linear-api-key");
+        const linearClient = new sdk_1.LinearClient({ apiKey });
+        const issue = await createIssue(linearClient);
+        if (!issue) {
+            return;
+        }
+        await createAttachment(linearClient, issue.id);
     }
-    await createAttachment(linearClient, issue.id);
-    //  core.setFailed(`${(error as any)?.message ?? error}`);
+    catch (error) {
+        core.setFailed(`${error?.message ?? error}`);
+    }
 };
 main();
 
@@ -2117,4 +2140,3 @@ module.exports = require("zlib");
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=index.js.map

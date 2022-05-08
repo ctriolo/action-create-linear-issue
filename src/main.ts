@@ -1,5 +1,4 @@
 import * as core from "@actions/core";
-import * as linear from "@linear/sdk";
 import { Attachment, Issue, LinearClient } from "@linear/sdk";
 
 /**
@@ -81,7 +80,7 @@ const createAttachment = async (
 const main = async () => {
   try {
     const apiKey = core.getInput("linear-api-key");
-    const linearClient = new linear.LinearClient({ apiKey });
+    const linearClient = new LinearClient({ apiKey });
 
     const issue = await createIssue(linearClient);
     if (!issue) {
