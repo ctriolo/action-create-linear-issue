@@ -27,8 +27,8 @@ This is helpful when you're:
 | `linear-issue-identifier` | The Linear issue's human readable identifier. (e.g. ENG-123) |
 | `linear-issue-title`      | The Linear issue's title.                                    |
 | `linear-issue-url`        | The Linear issue's URL. (e.g. https://...)                   |
-| `linear-team-id`          | The Linear team's unique identifier. (UUID)                   |
-| `linear-team-key`         | The Linear team's key/prefix (e.g. ENG)                       |
+| `linear-team-id`          | The Linear team's unique identifier. (UUID)                  |
+| `linear-team-key`         | The Linear team's key/prefix (e.g. ENG)                      |
 | `linear-attachment-id`    | The Linear attachment's uniquie identifier. (UUID)           |
 
 ## Example usage
