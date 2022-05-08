@@ -1,6 +1,80 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 525:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * Creates an attachment using the provided issue id and github action inputs
+ * @param linearClient LinearClient instance
+ * @param issueId Issue to attach the URL to
+ * @returns The newly created attachment
+ */
+const createAttachment = async (linearClient, input) => {
+    const attachmentPayload = await linearClient.attachmentCreate(input);
+    if (!attachmentPayload.success) {
+        return null;
+    }
+    const attachment = await attachmentPayload.attachment;
+    if (!attachment) {
+        return null;
+    }
+    return attachment;
+};
+exports["default"] = createAttachment;
+
+
+/***/ }),
+
+/***/ 598:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * Creates an issue using the provided issue id and github action inputs
+ * @param linearClient LinearClient instance
+ * @param issueId Issue to attach the URL to
+ * @returns The newly created issue
+ */
+const createIssue = async (linearClient, input) => {
+    const issuePayload = await linearClient.issueCreate(input);
+    if (!issuePayload.success) {
+        return null;
+    }
+    const issue = await issuePayload.issue;
+    if (!issue) {
+        return null;
+    }
+    return await issue;
+};
+exports["default"] = createIssue;
+
+
+/***/ }),
+
+/***/ 444:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const getTeamByKey = async (linearClient, teamKey) => {
+    const teams = await linearClient.teams({ filter: { key: { eq: teamKey } } });
+    if (teams.nodes.length === 0) {
+        return null;
+    }
+    return teams.nodes[0];
+};
+exports["default"] = getTeamByKey;
+
+
+/***/ }),
+
 /***/ 109:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -29,76 +103,61 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const sdk_1 = __nccwpck_require__(851);
-/**
- * Creates an issue using the provided issue id and github action inputs
- * @param linearClient LinearClient instance
- * @param issueId Issue to attach the URL to
- * @returns The newly created issue
- */
-const createIssue = async (linearClient) => {
-    const teamId = core.getInput("linear-team-id");
-    const issueTitle = core.getInput("linear-issue-title");
-    const issueDescription = core.getInput("linear-issue-description");
-    const issuePayload = await linearClient.issueCreate({
-        teamId,
-        title: issueTitle,
-        description: issueDescription,
-    });
-    if (!issuePayload.success) {
-        core.setFailed(`Failed to create issue with team id: ${teamId} and issue title: ${issueTitle}`);
-        return null;
-    }
-    const issue = await issuePayload.issue;
-    if (!issue) {
-        core.setFailed(`Failed to load recently created linear issue.`);
-        return null;
-    }
-    core.setOutput("linear-issue-id", issue.id);
-    core.setOutput("linear-issue-title", issue.title);
-    core.setOutput("linear-issue-identifier", issue.identifier);
-    core.setOutput("linear-issue-url", issue.url);
-    return await issue;
-};
-/**
- * Creates an attachment using the provided issue id and github action inputs
- * @param linearClient LinearClient instance
- * @param issueId Issue to attach the URL to
- * @returns The newly created attachment
- */
-const createAttachment = async (linearClient, issueId) => {
-    const attachmentTitle = core.getInput("linear-attachment-title");
-    const attachmentUrl = core.getInput("linear-attachment-url");
-    if (!attachmentUrl) {
-        return null;
-    }
-    const attachmentPayload = await linearClient.attachmentCreate({
-        issueId,
-        title: attachmentTitle || "",
-        url: attachmentUrl,
-    });
-    if (!attachmentPayload.success) {
-        core.setFailed(`Failed to create Linear URL attachment.`);
-        return null;
-    }
-    const attachment = await attachmentPayload.attachment;
-    if (!attachment) {
-        core.setFailed(`Failed to load recently created Linear URL attachment.`);
-        return null;
-    }
-    return attachment;
-};
+const createAttachment_1 = __importDefault(__nccwpck_require__(525));
+const createIssue_1 = __importDefault(__nccwpck_require__(598));
+const getTeamByKey_1 = __importDefault(__nccwpck_require__(444));
 const main = async () => {
     try {
         const apiKey = core.getInput("linear-api-key");
         const linearClient = new sdk_1.LinearClient({ apiKey });
-        const issue = await createIssue(linearClient);
-        if (!issue) {
+        // Get team object from linear-team-key
+        const teamKey = core.getInput("linear-team-key");
+        const team = await (0, getTeamByKey_1.default)(linearClient, teamKey);
+        if (!team) {
+            core.setFailed(`Failed to find team with key: ${teamKey}`);
             return;
         }
-        await createAttachment(linearClient, issue.id);
+        core.setOutput("linear-team-id", team.id);
+        core.setOutput("linear-team-key", team.key);
+        // Create issue object from linear-team-key
+        const issueTitle = core.getInput("linear-issue-title");
+        const issueDescription = core.getInput("linear-issue-description");
+        const issue = await (0, createIssue_1.default)(linearClient, {
+            teamId: team.id,
+            title: issueTitle,
+            description: issueDescription,
+        });
+        if (!issue) {
+            core.setFailed(`Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`);
+            return;
+        }
+        core.setOutput("linear-issue-id", issue.id);
+        core.setOutput("linear-issue-title", issue.title);
+        core.setOutput("linear-issue-identifier", issue.identifier);
+        core.setOutput("linear-issue-url", issue.url);
+        // Create issue object from linear-attachment-url
+        const attachmentTitle = core.getInput("linear-attachment-title");
+        const attachmentUrl = core.getInput("linear-attachment-url");
+        if (attachmentUrl) {
+            const attachment = await (0, createAttachment_1.default)(linearClient, {
+                issueId: issue.id,
+                url: attachmentUrl,
+                title: attachmentTitle,
+            });
+            if (attachment) {
+                core.setOutput("linear-attachment-id", attachment?.id);
+            }
+            else {
+                core.setFailed(`Failed to create Linear URL attachment.`);
+                return;
+            }
+        }
     }
     catch (error) {
         core.setFailed(`${error?.message ?? error}`);
