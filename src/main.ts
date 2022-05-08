@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import { Attachment, Issue, LinearClient, Team } from "@linear/sdk";
+import { LinearClient } from "@linear/sdk";
 import createAttachment from "./createAttachment";
 import createIssue from "./createIssue";
 import getTeamByKey from "./getTeamByKey";
