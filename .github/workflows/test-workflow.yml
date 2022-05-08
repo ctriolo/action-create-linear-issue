@@ -45,3 +45,5 @@ jobs:
           echo "Issue Identifier: ${{ steps.hello.outputs.linear-issue-identifier }}"
           echo "Issue Title: ${{ steps.hello.outputs.linear-issue-title }}"
           echo "Issue URL: ${{ steps.hello.outputs.linear-issue-url }}"
+          echo "Team ID: ${{ steps.hello.outputs.linear-team-id }}"
+          echo "Team Key: ${{ steps.hello.outputs.linear-team-key }}"

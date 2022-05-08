@@ -4,8 +4,8 @@ inputs:
   linear-api-key:
     description: "Linear API key generated from https://linear.app/settings/api"
     required: true
-  linear-team-id:
-    description: "Team ID for the Linear issue."
+  linear-team-key:
+    description: "Team key (e.g. ENG) for the Linear issue."
     required: true
   linear-issue-title:
     description: "Title for the Linear issue."
@@ -19,13 +19,17 @@ inputs:
     description: "Title of the URL attachment."
 outputs:
   linear-issue-id:
-    description: "The unique identifier of the Linear issue."
+    description: "The unique identifier of the Linear issue. (UUID)"
   linear-issue-identifier:
     description: "The Linear issue's human readable identifier (e.g. ENG-123)."
   linear-issue-title:
     description: "The Linear issue's title."
   linear-issue-url:
-    description: "The Linear issue's URL."
+    description: "The Linear issue's URL. (e.g. https://...)"
+  linear-team-id:
+    description: "The Linear teams unique identifier. (UUID)"
+  linear-team-key:
+    description: "The Linear teams key/prefix (e.g. ENG)"
 runs:
   using: "node16"
   main: "dist/index.js"

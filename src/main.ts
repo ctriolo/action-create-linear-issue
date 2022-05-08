@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import { Attachment, Issue, LinearClient } from "@linear/sdk";
+import { Attachment, Issue, LinearClient, Team } from "@linear/sdk";
 
 /**
  * Creates an issue using the provided issue id and github action inputs
@@ -75,6 +75,21 @@ const createAttachment = async (
   }
 
   return attachment;
+};
+
+const getTeam = async (linearClient: LinearClient): Promise<Team | null> => {
+  const teamKey = core.getInput("linear-team-key");
+  const teams = await linearClient.teams({ filter: { key: { eq: teamKey } } });
+  if (teams.nodes.length === 0) {
+    core.setFailed(`Failed to find team with key: ${teamKey}`);
+    return null;
+  }
+
+  const team = teams.nodes[0];
+
+  core.setOutput("linear-team-id", team.id);
+  core.setOutput("linear-team-key", team.key);
+  return team;
 };
 
 const main = async () => {
