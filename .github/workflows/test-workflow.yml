@@ -1,4 +1,4 @@
-name: release-module-build
+name: A test workflow
 
 on:
   workflow_dispatch:
@@ -28,6 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     name: A test job
     steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout action repo
+        uses: actions/checkout@v3
       - name: A test step
         uses: ./ # Uses an action in the root directory
         with:
@@ -37,7 +41,7 @@ jobs:
           linear-attachment-url: ${{ github.event.inputs.attachment-url }}
           linear-attachment-title: ${{ github.event.inputs.attachment-title }}
       # Use the output from the `hello` step
-      - name: Get the output time
+      - name: Check the outputs
         run: |
           echo "Issue ID: ${{ steps.hello.outputs.linear-issue-id }}"
           echo "Issue Identifier: ${{ steps.hello.outputs.linear-issue-identifier }}"
