@@ -10,31 +10,6 @@ This is helpful when you're:
 
 ## Inputs
 
-<<<<<<< Updated upstream
-### `linear-api-key`
-
-**Required** Linear API key generated from https://linear.app/settings/api
-
-### `linear-team-key`
-
-**Required** Team key (e.g. ENG) for the Linear issue.
-
-### `linear-issue-title`
-
-**Required** Title for the Linear issue.
-
-### `linear-issue-description`
-
-**Required** Description for the Linear issue.
-
-### `linear-attachment-url`
-
-URL to attach to the Linear issue.
-
-### `linear-attachment-title`
-
-Title of the URL attachment.
-=======
 | Input                      | Description                                                   | Required |
 | -------------------------- | ------------------------------------------------------------- | -------- |
 | `linear-api-key`           | Linear API key generated from https://linear.app/settings/api | ✅       |
@@ -43,7 +18,6 @@ Title of the URL attachment.
 | `linear-issue-description` | Description for the Linear issue.                             | ✅       |
 | `linear-attachment-url`    | URL to attach to the Linear issue.                            |          |
 | `linear-attachment-title`  | URL to attach to the Linear issue.                            |          |
->>>>>>> Stashed changes
 
 ## Outputs
 
