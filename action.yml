@@ -24,7 +24,7 @@ outputs:
   linear-issue-url:
     description: "The Linear issue's URL."
 runs:
-  using: "node14"
+  using: "node16"
   main: "dist/index.js"
 branding:
   icon: "checklist"
