@@ -1,4 +1,4 @@
-name: A test workflow
+name: Create Linear Issue Test Workflow
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ on:
         description: "URL Title to attach to the created Linear Issue"
 
 jobs:
-  test-job:
+  create-linear-issue-job:
     runs-on: ubuntu-latest
     name: A test job
     steps:
@@ -29,7 +29,8 @@ jobs:
       # you must check out the repository
       - name: Checkout action repo
         uses: actions/checkout@v3
-      - name: A test step
+      - name: Create the Linear Issue
+        id: createIssue
         uses: ./ # Uses an action in the root directory
         with:
           linear-api-key: ${{secrets.LINEAR_API_KEY}}
@@ -41,9 +42,10 @@ jobs:
       # Use the output from the `hello` step
       - name: Check the outputs
         run: |
-          echo "Issue ID: ${{ steps.hello.outputs.linear-issue-id }}"
-          echo "Issue Identifier: ${{ steps.hello.outputs.linear-issue-identifier }}"
-          echo "Issue Title: ${{ steps.hello.outputs.linear-issue-title }}"
-          echo "Issue URL: ${{ steps.hello.outputs.linear-issue-url }}"
-          echo "Team ID: ${{ steps.hello.outputs.linear-team-id }}"
-          echo "Team Key: ${{ steps.hello.outputs.linear-team-key }}"
+          echo "Issue ID: ${{ steps.createIssue.outputs.linear-issue-id }}"
+          echo "Issue Identifier: ${{ steps.createIssue.outputs.linear-issue-identifier }}"
+          echo "Issue Title: ${{ steps.createIssue.outputs.linear-issue-title }}"
+          echo "Issue URL: ${{ steps.createIssue.outputs.linear-issue-url }}"
+          echo "Team ID: ${{ steps.createIssue.outputs.linear-team-id }}"
+          echo "Team Key: ${{ steps.createIssue.outputs.linear-team-key }}"
+          echo "Attachment ID: ${{ steps.createIssue.outputs.linear-attachment-id }}"
