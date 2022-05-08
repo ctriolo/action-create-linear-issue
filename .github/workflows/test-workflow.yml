@@ -20,9 +20,6 @@ on:
       attachment-title:
         description: "URL Title to attach to the created Linear Issue"
 
-env:
-  LINEAR_API_KEY: ${{secrets.LINEAR_API_KEY}}
-
 jobs:
   test-job:
     runs-on: ubuntu-latest
@@ -35,6 +32,7 @@ jobs:
       - name: A test step
         uses: ./ # Uses an action in the root directory
         with:
+          linear-api-key: ${{secrets.LINEAR_API_KEY}}
           linear-team-id: ${{ github.event.inputs.team-id }}
           linear-issue-title: ${{ github.event.inputs.title }}
           linear-issue-description: ${{ github.event.inputs.description }}

@@ -1,6 +1,9 @@
 name: "Create Linear Issue"
 description: "Creates a Linear Issue based on inputs"
 inputs:
+  linear-api-key:
+    description: "Linear API key generated from https://linear.app/settings/api"
+    required: true
   linear-team-id:
     description: "Team ID for the Linear issue."
     required: true
