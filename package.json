@@ -2,14 +2,16 @@
   "name": "action-create-linear-issue",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && ncc build lib/main.js",
-    "format": "prettier --write **/*.ts"
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "package": "ncc build --source-map --license licenses.txt",
+    "all": "npm run format && npm run build && npm run package"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "ctriolo",
+  "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.8.0",
     "@actions/github": "^5.0.1",
