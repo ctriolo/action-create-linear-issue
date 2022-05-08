@@ -1,0 +1,45 @@
+name: release-module-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      team-id:
+        required: true
+        type: choice
+        description: "Linear Team ID to create the issue for"
+        options:
+          - CHR
+      title:
+        required: true
+        description: "Title for the Linear Issue"
+      description:
+        required: true
+        description: "Description for the Linear Issue"
+      attachment-url:
+        description: "URL to attach to the created Linear Issue"
+      attachment-title:
+        description: "URL Title to attach to the created Linear Issue"
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    name: A test job
+    steps:
+      - name: A test step
+        uses: ./ # Uses an action in the root directory
+        with:
+          linear-team-id: ${{ github.event.inputs.team-id }}
+          linear-issue-title: ${{ github.event.inputs.title }}
+          linear-issue-description: ${{ github.event.inputs.description }}
+          linear-attachment-url: ${{ github.event.inputs.attachment-url }}
+          linear-attachment-title: ${{ github.event.inputs.attachment-title }}
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: |
+          echo "Issue ID: ${{ steps.hello.outputs.linear-issue-id }}"
+          echo "Issue Identifier: ${{ steps.hello.outputs.linear-issue-identifier }}"
+          echo "Issue Title: ${{ steps.hello.outputs.linear-issue-title }}"
+          echo "Issue URL: ${{ steps.hello.outputs.linear-issue-url }}"
+
+env:
+  LINEAR_API_KEY: ${{secrets.LINEAR_API_KEY}}
