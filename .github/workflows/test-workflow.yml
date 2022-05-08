@@ -20,6 +20,9 @@ on:
       attachment-title:
         description: "URL Title to attach to the created Linear Issue"
 
+env:
+  LINEAR_API_KEY: ${{secrets.LINEAR_API_KEY}}
+
 jobs:
   test-job:
     runs-on: ubuntu-latest
@@ -40,6 +43,3 @@ jobs:
           echo "Issue Identifier: ${{ steps.hello.outputs.linear-issue-identifier }}"
           echo "Issue Title: ${{ steps.hello.outputs.linear-issue-title }}"
           echo "Issue URL: ${{ steps.hello.outputs.linear-issue-url }}"
-
-env:
-  LINEAR_API_KEY: ${{secrets.LINEAR_API_KEY}}
