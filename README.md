@@ -28,11 +28,11 @@ This is helpful when you're:
 
 ### `linear-attachment-url`
 
-**Required** URL to attach to the Linear issue.
+URL to attach to the Linear issue.
 
 ### `linear-attachment-title`
 
-**Required** Title of the URL attachment.
+Title of the URL attachment.
 
 ## Outputs
 
