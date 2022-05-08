@@ -19,7 +19,7 @@ inputs:
     description: "Title of the URL attachment."
 outputs:
   linear-issue-id:
-    description: "The unique identifier of the Linear issue. (UUID)"
+    description: "The Linear issue's unique identifier. (UUID)"
   linear-issue-identifier:
     description: "The Linear issue's human readable identifier (e.g. ENG-123)."
   linear-issue-title:
@@ -27,9 +27,11 @@ outputs:
   linear-issue-url:
     description: "The Linear issue's URL. (e.g. https://...)"
   linear-team-id:
-    description: "The Linear teams unique identifier. (UUID)"
+    description: "The Linear team's unique identifier. (UUID)"
   linear-team-key:
-    description: "The Linear teams key/prefix (e.g. ENG)"
+    description: "The Linear team's key/prefix (e.g. ENG)"
+  linear-attachment-id:
+    description: "The Linear attachment's uniquie identifier. (UUID)"
 runs:
   using: "node16"
   main: "dist/index.js"
