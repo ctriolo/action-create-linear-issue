@@ -33,7 +33,7 @@ jobs:
         uses: ./ # Uses an action in the root directory
         with:
           linear-api-key: ${{secrets.LINEAR_API_KEY}}
-          linear-team-id: ${{ github.event.inputs.team-id }}
+          linear-team-key: ${{ github.event.inputs.team-id }}
           linear-issue-title: ${{ github.event.inputs.title }}
           linear-issue-description: ${{ github.event.inputs.description }}
           linear-attachment-url: ${{ github.event.inputs.attachment-url }}
