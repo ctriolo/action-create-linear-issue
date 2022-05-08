@@ -33,6 +33,8 @@ const main = async () => {
       );
       return;
     }
+    console.log(`Created issue with identifier: ${issue.identifier}`);
+    console.log(issue.url);
     core.setOutput("linear-issue-id", issue.id);
     core.setOutput("linear-issue-title", issue.title);
     core.setOutput("linear-issue-identifier", issue.identifier);

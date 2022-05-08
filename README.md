@@ -28,11 +28,11 @@ This is helpful when you're:
 
 ### `linear-attachment-url`
 
-**Required** URL to attach to the Linear issue.
+URL to attach to the Linear issue.
 
 ### `linear-attachment-title`
 
-**Required** Title of the URL attachment.
+Title of the URL attachment.
 
 ## Outputs
 
@@ -90,7 +90,7 @@ jobs:
           linear-team-key: "CHR"
           linear-issue-title: ${{github.event.pull_request.title}}
           linear-issue-description: ${{github.event.pull_request.body}}
-          linear-attachment-url: ${{github.event.pull_request.url}}
+          linear-attachment-url: ${{github.event.pull_request.html_url}}
           linear-attachment-title: ${{github.event.pull_request.title}}
 
       - name: Create comment in PR with Linear Issue link
