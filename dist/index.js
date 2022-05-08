@@ -137,6 +137,8 @@ const main = async () => {
             core.setFailed(`Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`);
             return;
         }
+        console.log(`Created issue with identifier: ${issue.identifier}`);
+        console.log(issue.url);
         core.setOutput("linear-issue-id", issue.id);
         core.setOutput("linear-issue-title", issue.title);
         core.setOutput("linear-issue-identifier", issue.identifier);
@@ -148,7 +150,7 @@ const main = async () => {
             const attachment = await (0, createAttachment_1.default)(linearClient, {
                 issueId: issue.id,
                 url: attachmentUrl,
-                title: attachmentTitle,
+                title: attachmentTitle || attachmentUrl,
             });
             if (attachment) {
                 core.setOutput("linear-attachment-id", attachment?.id);
