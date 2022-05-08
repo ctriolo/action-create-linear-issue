@@ -45,7 +45,7 @@ const main = async () => {
       const attachment = await createAttachment(linearClient, {
         issueId: issue.id,
         url: attachmentUrl,
-        title: attachmentTitle,
+        title: attachmentTitle || attachmentUrl,
       });
       if (attachment) {
         core.setOutput("linear-attachment-id", attachment?.id);
