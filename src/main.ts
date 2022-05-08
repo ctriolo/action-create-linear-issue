@@ -1,5 +1,6 @@
-import core from "@actions/core";
-import linear, { Attachment, Issue, LinearClient } from "@linear/sdk";
+import * as core from "@actions/core";
+import * as linear from "@linear/sdk";
+import { Attachment, Issue, LinearClient } from "@linear/sdk";
 
 /**
  * Creates an issue using the provided issue id and github action inputs

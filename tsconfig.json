@@ -4,9 +4,10 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "outDir": "./lib",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "esModuleInterop": true
-  }
+  },
+  "exclude": ["node_modules"]
 }

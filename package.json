@@ -2,7 +2,8 @@
   "name": "action-create-linear-issue",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "lib/main.js",
+  "private": true,
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.33.4",
     "prettier": "^2.6.2",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "ts-node": "^10.7.0"
   }
 }
