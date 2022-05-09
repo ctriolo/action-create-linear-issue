@@ -21,15 +21,17 @@ This is helpful when you're:
 
 ## Outputs
 
-| Output                    | Description                                                  |
-| ------------------------- | ------------------------------------------------------------ |
-| `linear-issue-id`         | The Linear issue's unique identifier. (UUID)                 |
-| `linear-issue-identifier` | The Linear issue's human readable identifier. (e.g. ENG-123) |
-| `linear-issue-title`      | The Linear issue's title.                                    |
-| `linear-issue-url`        | The Linear issue's URL. (e.g. https://...)                   |
-| `linear-team-id`          | The Linear team's unique identifier. (UUID)                  |
-| `linear-team-key`         | The Linear team's key/prefix (e.g. ENG)                      |
-| `linear-attachment-id`    | The Linear attachment's uniquie identifier. (UUID)           |
+| Output                     | Description                                                  |
+| -------------------------- | ------------------------------------------------------------ |
+| `linear-issue-id`          | The Linear issue's unique identifier. (UUID)                 |
+| `linear-issue-identifier`  | The Linear issue's human readable identifier. (e.g. ENG-123) |
+| `linear-issue-number`      | The Linear issue's number. (e.g. the `123` of `ENG-123`)     |
+| `linear-issue-title`       | The Linear issue's title.                                    |
+| `linear-issue-description` | The Linear issue's description.                              |
+| `linear-issue-url`         | The Linear issue's URL. (e.g. https://...)                   |
+| `linear-team-id`           | The Linear team's unique identifier. (UUID)                  |
+| `linear-team-key`          | The Linear team's key/prefix (e.g. ENG)                      |
+| `linear-attachment-id`     | The Linear attachment's uniquie identifier. (UUID)           |
 
 ## Example usage
 

@@ -80,72 +80,52 @@ exports["default"] = getTeamByKey;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(186));
+const core_1 = __nccwpck_require__(186);
 const sdk_1 = __nccwpck_require__(851);
 const createAttachment_1 = __importDefault(__nccwpck_require__(525));
 const createIssue_1 = __importDefault(__nccwpck_require__(598));
 const getTeamByKey_1 = __importDefault(__nccwpck_require__(444));
 const main = async () => {
     try {
-        const apiKey = core.getInput("linear-api-key");
+        const apiKey = (0, core_1.getInput)("linear-api-key");
         const linearClient = new sdk_1.LinearClient({ apiKey });
         // Get team object from linear-team-key
-        const teamKey = core.getInput("linear-team-key");
+        const teamKey = (0, core_1.getInput)("linear-team-key");
         const team = await (0, getTeamByKey_1.default)(linearClient, teamKey);
         if (!team) {
-            core.setFailed(`Failed to find team with key: ${teamKey}`);
+            (0, core_1.setFailed)(`Failed to find team with key: ${teamKey}`);
             return;
         }
-        core.setOutput("linear-team-id", team.id);
-        core.setOutput("linear-team-key", team.key);
         // Create issue object from linear-team-key
-        const issueTitle = core.getInput("linear-issue-title");
-        const issueDescription = core.getInput("linear-issue-description");
+        const issueTitle = (0, core_1.getInput)("linear-issue-title");
+        const issueDescription = (0, core_1.getInput)("linear-issue-description");
         const issue = await (0, createIssue_1.default)(linearClient, {
             teamId: team.id,
             title: issueTitle,
             description: issueDescription,
         });
         if (!issue) {
-            core.setFailed(`Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`);
+            (0, core_1.setFailed)(`Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`);
             return;
         }
+        // Set issue properties as output
         console.log(`Created issue with identifier: ${issue.identifier}`);
         console.log(issue.url);
-        core.setOutput("linear-issue-id", issue.id);
-        core.setOutput("linear-issue-title", issue.title);
-        core.setOutput("linear-issue-identifier", issue.identifier);
-        core.setOutput("linear-issue-url", issue.url);
+        (0, core_1.setOutput)("linear-team-id", team.id);
+        (0, core_1.setOutput)("linear-team-key", team.key);
+        (0, core_1.setOutput)("linear-issue-id", issue.id);
+        (0, core_1.setOutput)("linear-issue-number", issue.number);
+        (0, core_1.setOutput)("linear-issue-identifier", issue.identifier);
+        (0, core_1.setOutput)("linear-issue-url", issue.url);
+        (0, core_1.setOutput)("linear-issue-title", issue.title);
+        (0, core_1.setOutput)("linear-issue-description", issue.description);
         // Create issue object from linear-attachment-url
-        const attachmentTitle = core.getInput("linear-attachment-title");
-        const attachmentUrl = core.getInput("linear-attachment-url");
+        const attachmentTitle = (0, core_1.getInput)("linear-attachment-title");
+        const attachmentUrl = (0, core_1.getInput)("linear-attachment-url");
         if (attachmentUrl) {
             const attachment = await (0, createAttachment_1.default)(linearClient, {
                 issueId: issue.id,
@@ -153,16 +133,16 @@ const main = async () => {
                 title: attachmentTitle || attachmentUrl,
             });
             if (attachment) {
-                core.setOutput("linear-attachment-id", attachment?.id);
+                (0, core_1.setOutput)("linear-attachment-id", attachment?.id);
             }
             else {
-                core.setFailed(`Failed to create Linear URL attachment.`);
+                (0, core_1.setFailed)(`Failed to create Linear URL attachment.`);
                 return;
             }
         }
     }
     catch (error) {
-        core.setFailed(`${error?.message ?? error}`);
+        (0, core_1.setFailed)(`${error?.message ?? error}`);
     }
 };
 main();
