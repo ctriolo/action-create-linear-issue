@@ -21,7 +21,6 @@ const main = async () => {
     const issueTitle = getInput("linear-issue-title");
     const issueDescription = getInput("linear-issue-description");
     const issueStateId = getInput("linear-issue-state-id");
-    console.log(`Issue State Id: ${issueStateId}`);
     const issue = await createIssue(linearClient, {
       teamId: team.id,
       title: issueTitle,
