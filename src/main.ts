@@ -25,7 +25,7 @@ const main = async () => {
       teamId: team.id,
       title: issueTitle,
       description: issueDescription,
-      stateId: issueStateId,
+      ...(issueStateId ? { stateId: issueStateId } : {}),
     });
     if (!issue) {
       setFailed(

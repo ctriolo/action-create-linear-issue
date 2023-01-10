@@ -104,12 +104,11 @@ const main = async () => {
         const issueTitle = (0, core_1.getInput)("linear-issue-title");
         const issueDescription = (0, core_1.getInput)("linear-issue-description");
         const issueStateId = (0, core_1.getInput)("linear-issue-state-id");
-        console.log(`Issue State Id: ${issueStateId}`);
         const issue = await (0, createIssue_1.default)(linearClient, {
             teamId: team.id,
             title: issueTitle,
             description: issueDescription,
-            stateId: issueStateId,
+            ...(issueStateId ? { stateId: issueStateId } : {}),
         });
         if (!issue) {
             (0, core_1.setFailed)(`Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`);
