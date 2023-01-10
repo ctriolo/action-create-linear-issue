@@ -20,10 +20,13 @@ const main = async () => {
     // Create issue object from linear-team-key
     const issueTitle = getInput("linear-issue-title");
     const issueDescription = getInput("linear-issue-description");
+    const issueStateId = getInput("linear-issue-state-id");
+    console.log(issueStateId);
     const issue = await createIssue(linearClient, {
       teamId: team.id,
       title: issueTitle,
       description: issueDescription,
+      stateId: issueStateId,
     });
     if (!issue) {
       setFailed(
@@ -43,6 +46,8 @@ const main = async () => {
     setOutput("linear-issue-url", issue.url);
     setOutput("linear-issue-title", issue.title);
     setOutput("linear-issue-description", issue.description);
+    const state = await issue.state;
+    setOutput("linear-issue-state-id", state?.id);
 
     // Create issue object from linear-attachment-url
     const attachmentTitle = getInput("linear-attachment-title");

@@ -12,6 +12,7 @@ const createIssue = async (
     teamId: string;
     title: string;
     description: string;
+    stateId?: string;
   }
 ): Promise<Issue | null> => {
   const issuePayload = await linearClient.issueCreate(input);
