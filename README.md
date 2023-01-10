@@ -16,6 +16,7 @@ This is helpful when you're:
 | `linear-team-key`          | Team key (e.g. ENG) for the Linear issue.                     | ✅       |
 | `linear-issue-title`       | Title for the Linear issue.                                   | ✅       |
 | `linear-issue-description` | Description for the Linear issue.                             | ✅       |
+| `linear-issue-state-id`    | Team state ID for the Linear issue.                           |          |
 | `linear-attachment-url`    | URL to attach to the Linear issue.                            |          |
 | `linear-attachment-title`  | URL to attach to the Linear issue.                            |          |
 

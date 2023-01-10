@@ -13,6 +13,8 @@ inputs:
   linear-issue-description:
     description: "Description for the Linear issue."
     required: true
+  linear-issue-state-id:
+    description: "Team state ID for the Linear issue."
   linear-attachment-url:
     description: "URL to attach to the Linear issue."
   linear-attachment-title:
@@ -30,6 +32,8 @@ outputs:
     description: "The Linear issue's description."
   linear-issue-url:
     description: "The Linear issue's URL. (e.g. https://...)"
+  linear-issue-state-id:
+    description: "Team state ID for the Linear issue."
   linear-team-id:
     description: "The Linear team's unique identifier. (UUID)"
   linear-team-key:
