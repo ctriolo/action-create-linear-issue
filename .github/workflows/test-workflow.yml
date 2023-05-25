@@ -19,6 +19,8 @@ on:
         description: "URL to attach to the created Linear Issue"
       attachment-title:
         description: "URL Title to attach to the created Linear Issue"
+      issue-label-ids:
+        description: "Comma deliminated label ids"
 
 jobs:
   create-linear-issue-job:
@@ -40,6 +42,7 @@ jobs:
           linear-issue-state-id: "d8dc0111-0862-4ea9-8eb5-e7c127f847ce" # Done
           linear-attachment-url: ${{ github.event.inputs.attachment-url }}
           linear-attachment-title: ${{ github.event.inputs.attachment-title }}
+          linear-issue-label-ids: ${{ github.event.inputs.issue-label-ids }}
       # Use the output from the `hello` step
       - name: Check the outputs
         run: |

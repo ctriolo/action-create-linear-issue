@@ -4,6 +4,13 @@ import createAttachment from "./createAttachment";
 import createIssue from "./createIssue";
 import getTeamByKey from "./getTeamByKey";
 
+const getIdsFromInput = (input: string): string[] => {
+  if (!input.trim()) {
+    return [];
+  }
+  return input.split(",").map((id) => id.trim());
+};
+
 const main = async () => {
   try {
     const apiKey = getInput("linear-api-key");
@@ -21,10 +28,12 @@ const main = async () => {
     const issueTitle = getInput("linear-issue-title");
     const issueDescription = getInput("linear-issue-description");
     const issueStateId = getInput("linear-issue-state-id");
+    const labelIds = getIdsFromInput(getInput("linear-issue-label-ids"));
     const issue = await createIssue(linearClient, {
       teamId: team.id,
       title: issueTitle,
       description: issueDescription,
+      ...(labelIds.length > 0 ? { labelIds } : {}),
       ...(issueStateId ? { stateId: issueStateId } : {}),
     });
     if (!issue) {

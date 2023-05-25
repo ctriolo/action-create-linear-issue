@@ -89,6 +89,12 @@ const sdk_1 = __nccwpck_require__(851);
 const createAttachment_1 = __importDefault(__nccwpck_require__(525));
 const createIssue_1 = __importDefault(__nccwpck_require__(598));
 const getTeamByKey_1 = __importDefault(__nccwpck_require__(444));
+const getIdsFromInput = (input) => {
+    if (!input.trim()) {
+        return [];
+    }
+    return input.split(",").map((id) => id.trim());
+};
 const main = async () => {
     try {
         const apiKey = (0, core_1.getInput)("linear-api-key");
@@ -104,10 +110,12 @@ const main = async () => {
         const issueTitle = (0, core_1.getInput)("linear-issue-title");
         const issueDescription = (0, core_1.getInput)("linear-issue-description");
         const issueStateId = (0, core_1.getInput)("linear-issue-state-id");
+        const labelIds = getIdsFromInput((0, core_1.getInput)("linear-issue-label-ids"));
         const issue = await (0, createIssue_1.default)(linearClient, {
             teamId: team.id,
             title: issueTitle,
             description: issueDescription,
+            ...(labelIds.length > 0 ? { labelIds } : {}),
             ...(issueStateId ? { stateId: issueStateId } : {}),
         });
         if (!issue) {
