@@ -9,7 +9,7 @@ const getIdsFromInput = (input: string): string[] => {
     return [];
   }
   return input.split(",").map((id) => id.trim());
-}
+};
 
 const main = async () => {
   try {
