@@ -27,6 +27,7 @@ jobs:
           linear-issue-state-id: "d8dc0111-0862-4ea9-8eb5-e7c127f847ce" # Done
           linear-attachment-url: ${{github.event.pull_request.html_url}}
           linear-attachment-title: ${{github.event.pull_request.title}}
+          linear-linear-issue-label-ids: "ea7fc863-71f7-409c-bcda-b42a22dc9a75,7c8d0d42-b53c-49c4-ba23-b48f6e14eb62,77c37057-9bd9-413b-a8b8-5aabd7c1a557"
       - name: Create comment in PR with Linear Issue link
         if: steps.fc.outputs.comment-id == ''
         uses: peter-evans/create-or-update-comment@v2
