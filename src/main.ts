@@ -29,13 +29,17 @@ const main = async () => {
     const issueDescription = getInput("linear-issue-description");
     const issueStateId = getInput("linear-issue-state-id");
     const labelIds = getIdsFromInput(getInput("linear-issue-label-ids"));
+    const projectId = getInput("linear-project-id");
+
     const issue = await createIssue(linearClient, {
       teamId: team.id,
       title: issueTitle,
       description: issueDescription,
       ...(labelIds.length > 0 ? { labelIds } : {}),
       ...(issueStateId ? { stateId: issueStateId } : {}),
+      ...(projectId ? { projectId } : {}),
     });
+
     if (!issue) {
       setFailed(
         `Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`
@@ -56,6 +60,9 @@ const main = async () => {
     setOutput("linear-issue-description", issue.description);
     const state = await issue.state;
     setOutput("linear-issue-state-id", state?.id);
+    const project = await issue.project;
+    setOutput("linear-project-id", project?.id);
+    setOutput("linear-project-name", project?.name);
 
     // Create issue object from linear-attachment-url
     const attachmentTitle = getInput("linear-attachment-title");

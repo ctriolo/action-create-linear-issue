@@ -19,6 +19,7 @@ This is helpful when you're:
 | `linear-issue-state-id`    | Team state ID for the Linear issue.                           |          |
 | `linear-attachment-url`    | URL to attach to the Linear issue.                            |          |
 | `linear-attachment-title`  | URL to attach to the Linear issue.                            |          |
+| `linear-project-id`        | ID of Linear project to assign for issue.                     |          |
 
 ## Outputs
 
@@ -33,6 +34,8 @@ This is helpful when you're:
 | `linear-team-id`           | The Linear team's unique identifier. (UUID)                  |
 | `linear-team-key`          | The Linear team's key/prefix (e.g. ENG)                      |
 | `linear-attachment-id`     | The Linear attachment's uniquie identifier. (UUID)           |
+| `linear-project-id`        | The Linear project ID                                        |
+| `linear-project-name`      | The Linear project name                                      |
 
 ## Example usage
 
