@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /**
  * Creates an attachment using the provided issue id and github action inputs
  * @param linearClient LinearClient instance
- * @param issueId Issue to attach the URL to
+ * @param input Required input to pass to attachmentCreate
  * @returns The newly created attachment
  */
 const createAttachment = async (linearClient, input) => {
@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /**
  * Creates an issue using the provided issue id and github action inputs
  * @param linearClient LinearClient instance
- * @param issueId Issue to attach the URL to
+ * @param input Required input to pass to issueCreate
  * @returns The newly created issue
  */
 const createIssue = async (linearClient, input) => {
@@ -50,7 +50,7 @@ const createIssue = async (linearClient, input) => {
     if (!issue) {
         return null;
     }
-    return await issue;
+    return issue;
 };
 exports["default"] = createIssue;
 
@@ -111,12 +111,14 @@ const main = async () => {
         const issueDescription = (0, core_1.getInput)("linear-issue-description");
         const issueStateId = (0, core_1.getInput)("linear-issue-state-id");
         const labelIds = getIdsFromInput((0, core_1.getInput)("linear-issue-label-ids"));
+        const projectId = (0, core_1.getInput)("linear-project-id");
         const issue = await (0, createIssue_1.default)(linearClient, {
             teamId: team.id,
             title: issueTitle,
             description: issueDescription,
             ...(labelIds.length > 0 ? { labelIds } : {}),
             ...(issueStateId ? { stateId: issueStateId } : {}),
+            ...(projectId ? { projectId } : {}),
         });
         if (!issue) {
             (0, core_1.setFailed)(`Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`);
@@ -135,6 +137,9 @@ const main = async () => {
         (0, core_1.setOutput)("linear-issue-description", issue.description);
         const state = await issue.state;
         (0, core_1.setOutput)("linear-issue-state-id", state?.id);
+        const project = await issue.project;
+        (0, core_1.setOutput)("linear-project-id", project?.id);
+        (0, core_1.setOutput)("linear-project-name", project?.name);
         // Create issue object from linear-attachment-url
         const attachmentTitle = (0, core_1.getInput)("linear-attachment-title");
         const attachmentUrl = (0, core_1.getInput)("linear-attachment-url");

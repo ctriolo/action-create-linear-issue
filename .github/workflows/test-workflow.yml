@@ -21,6 +21,8 @@ on:
         description: "URL Title to attach to the created Linear Issue"
       issue-label-ids:
         description: "Comma deliminated label ids"
+      project-id:
+        description: "ID of Linear project to assign for issue"
 
 jobs:
   create-linear-issue-job:
@@ -43,6 +45,7 @@ jobs:
           linear-attachment-url: ${{ github.event.inputs.attachment-url }}
           linear-attachment-title: ${{ github.event.inputs.attachment-title }}
           linear-issue-label-ids: ${{ github.event.inputs.issue-label-ids }}
+          linear-project-id: ${{ github.event.inputs.project-id }}
       # Use the output from the `hello` step
       - name: Check the outputs
         run: |
@@ -53,3 +56,5 @@ jobs:
           echo "Team ID: ${{ steps.createIssue.outputs.linear-team-id }}"
           echo "Team Key: ${{ steps.createIssue.outputs.linear-team-key }}"
           echo "Attachment ID: ${{ steps.createIssue.outputs.linear-attachment-id }}"
+          echo "Project ID: ${{ steps.createIssue.outputs.linear-project-id }}"
+          echo "Project name: ${{ steps.createIssue.outputs.linear-project-name }}"

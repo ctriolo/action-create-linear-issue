@@ -20,7 +20,9 @@ inputs:
   linear-attachment-title:
     description: "Title of the URL attachment."
   linear-issue-label-ids:
-    description: "Comma deliminated label ids"
+    description: "Comma delimitated label ids"
+  linear-project-id:
+    description: "ID of Linear project to assign for issue"
 outputs:
   linear-issue-id:
     description: "The Linear issue's unique identifier. (UUID)"
@@ -41,7 +43,11 @@ outputs:
   linear-team-key:
     description: "The Linear team's key/prefix (e.g. ENG)"
   linear-attachment-id:
-    description: "The Linear attachment's uniquie identifier. (UUID)"
+    description: "The Linear attachment's unique identifier. (UUID)"
+  linear-project-id:
+    description: "The Linear project ID"
+  linear-project-name:
+    description: "The Linear project name"
 runs:
   using: "node16"
   main: "dist/index.js"

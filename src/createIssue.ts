@@ -3,7 +3,7 @@ import { Issue, LinearClient } from "@linear/sdk";
 /**
  * Creates an issue using the provided issue id and github action inputs
  * @param linearClient LinearClient instance
- * @param issueId Issue to attach the URL to
+ * @param input Required input to pass to issueCreate
  * @returns The newly created issue
  */
 const createIssue = async (
@@ -14,6 +14,7 @@ const createIssue = async (
     description: string;
     stateId?: string;
     labelIds?: string[];
+    projectId?: string;
   }
 ): Promise<Issue | null> => {
   const issuePayload = await linearClient.issueCreate(input);
@@ -23,11 +24,12 @@ const createIssue = async (
   }
 
   const issue = await issuePayload.issue;
+
   if (!issue) {
     return null;
   }
 
-  return await issue;
+  return issue;
 };
 
 export default createIssue;
