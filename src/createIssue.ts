@@ -1,4 +1,5 @@
 import { Issue, LinearClient } from "@linear/sdk";
+import { IssueCreateInput } from "@linear/sdk/dist/_generated_documents";
 
 /**
  * Creates an issue using the provided issue id and github action inputs
@@ -8,13 +9,7 @@ import { Issue, LinearClient } from "@linear/sdk";
  */
 const createIssue = async (
   linearClient: LinearClient,
-  input: {
-    teamId: string;
-    title: string;
-    description: string;
-    stateId?: string;
-    labelIds?: string[];
-  }
+  input: IssueCreateInput
 ): Promise<Issue | null> => {
   const issuePayload = await linearClient.issueCreate(input);
 

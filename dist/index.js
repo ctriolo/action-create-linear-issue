@@ -99,6 +99,23 @@ const main = async () => {
     try {
         const apiKey = (0, core_1.getInput)("linear-api-key");
         const linearClient = new sdk_1.LinearClient({ apiKey });
+        // If we can match the user, we can assign the issue to them
+        let assigneeId;
+        const email = (0, core_1.getInput)("author-email");
+        console.log(`Looking for user with email: ${email}`);
+        if (email) {
+            const response = await linearClient.users({
+                filter: { email: { eqIgnoreCase: email } },
+            });
+            const user = response.nodes[0];
+            if (user) {
+                assigneeId = user.id;
+                console.log(`Found user with email: ${email}`);
+            }
+            else {
+                console.log(`Failed to find user with email: ${email}`);
+            }
+        }
         // Get team object from linear-team-key
         const teamKey = (0, core_1.getInput)("linear-team-key");
         const team = await (0, getTeamByKey_1.default)(linearClient, teamKey);
@@ -113,6 +130,7 @@ const main = async () => {
         const labelIds = getIdsFromInput((0, core_1.getInput)("linear-issue-label-ids"));
         const issue = await (0, createIssue_1.default)(linearClient, {
             teamId: team.id,
+            assigneeId,
             title: issueTitle,
             description: issueDescription,
             ...(labelIds.length > 0 ? { labelIds } : {}),

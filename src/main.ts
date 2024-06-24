@@ -1,5 +1,5 @@
 import { setFailed, getInput, setOutput } from "@actions/core";
-import { LinearClient } from "@linear/sdk";
+import { LinearClient, User } from "@linear/sdk";
 import createAttachment from "./createAttachment";
 import createIssue from "./createIssue";
 import getTeamByKey from "./getTeamByKey";
@@ -16,6 +16,23 @@ const main = async () => {
     const apiKey = getInput("linear-api-key");
     const linearClient = new LinearClient({ apiKey });
 
+    // If we can match the user, we can assign the issue to them
+    let assigneeId: string | undefined;
+    const email = getInput("author-email");
+    console.log(`Looking for user with email: ${email}`);
+    if (email) {
+      const response = await linearClient.users({
+        filter: { email: { eqIgnoreCase: email } },
+      });
+      const user = response.nodes[0];
+      if (user) {
+        assigneeId = user.id;
+        console.log(`Found user with email: ${email}`);
+      } else {
+        console.log(`Failed to find user with email: ${email}`);
+      }
+    }
+
     // Get team object from linear-team-key
     const teamKey = getInput("linear-team-key");
     const team = await getTeamByKey(linearClient, teamKey);
@@ -31,6 +48,7 @@ const main = async () => {
     const labelIds = getIdsFromInput(getInput("linear-issue-label-ids"));
     const issue = await createIssue(linearClient, {
       teamId: team.id,
+      assigneeId,
       title: issueTitle,
       description: issueDescription,
       ...(labelIds.length > 0 ? { labelIds } : {}),

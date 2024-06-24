@@ -20,7 +20,9 @@ inputs:
   linear-attachment-title:
     description: "Title of the URL attachment."
   linear-issue-label-ids:
-    description: "Comma deliminated label ids"
+    description: "Comma deliminated label ids."
+  author-email:
+    description: "Email address of the author of the issue. Used for finding the Linear user to be assigned."
 outputs:
   linear-issue-id:
     description: "The Linear issue's unique identifier. (UUID)"

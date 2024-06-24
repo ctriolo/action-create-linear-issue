@@ -19,6 +19,7 @@ This is helpful when you're:
 | `linear-issue-state-id`    | Team state ID for the Linear issue.                           |          |
 | `linear-attachment-url`    | URL to attach to the Linear issue.                            |          |
 | `linear-attachment-title`  | URL to attach to the Linear issue.                            |          |
+| `author-email`             | Email address to find the initial assignee                    |          |
 
 ## Outputs
 
@@ -62,6 +63,7 @@ jobs:
           linear-issue-description: ${{github.event.pull_request.body}}
           linear-attachment-url: ${{github.event.pull_request.html_url}}
           linear-attachment-title: ${{github.event.pull_request.title}}
+          author-email: ${{ github.event.pull_request.user.email }}
 
       - name: Create comment in PR with Linear Issue link
         uses: peter-evans/create-or-update-comment@v2
