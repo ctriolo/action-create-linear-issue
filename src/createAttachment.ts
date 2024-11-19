@@ -12,9 +12,9 @@ const createAttachment = async (
     issueId: string;
     title: string;
     url: string;
-  }
+  },
 ): Promise<Attachment | null> => {
-  const attachmentPayload = await linearClient.attachmentCreate(input);
+  const attachmentPayload = await linearClient.createAttachment(input);
   if (!attachmentPayload.success) {
     return null;
   }
