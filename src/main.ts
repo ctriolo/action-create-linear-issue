@@ -38,7 +38,7 @@ const main = async () => {
     });
     if (!issue) {
       setFailed(
-        `Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`
+        `Failed to create issue with team id: ${team.id} and issue title: ${issueTitle}`,
       );
       return;
     }

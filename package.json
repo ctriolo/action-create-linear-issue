@@ -1,27 +1,32 @@
 {
-  "name": "action-create-linear-issue",
-  "version": "1.0.0",
-  "description": "",
-  "main": "lib/main.js",
-  "private": true,
-  "scripts": {
-    "build": "tsc",
-    "format": "prettier --write **/*.ts",
-    "package": "ncc build --license licenses.txt",
-    "all": "yarn format && yarn build && yarn package"
-  },
-  "keywords": [],
-  "author": "ctriolo",
-  "license": "MIT",
-  "dependencies": {
-    "@actions/core": "^1.8.0",
-    "@actions/github": "^5.0.1",
-    "@linear/sdk": "^1.22.0"
-  },
-  "devDependencies": {
-    "@vercel/ncc": "^0.33.4",
-    "prettier": "^2.6.2",
-    "typescript": "^4.6.4",
-    "ts-node": "^10.7.0"
-  }
+	"name": "action-create-linear-issue",
+	"packageManager": "pnpm@9.1.1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "lib/main.js",
+	"private": true,
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"format": "prettier --write **/*.ts",
+		"license": "ncc build --license licenses.txt",
+		"all": "pnpm format && pnpm build && pnpm license",
+		"prepare": "husky",
+		"pre-commit": "pnpm all && git diff --quiet || (echo '🚨 Commit aborted: Changes detected after build. Please add the changes and try again.' && exit 1)"
+	},
+	"keywords": [],
+	"author": "ctriolo",
+	"license": "MIT",
+	"dependencies": {
+		"@actions/core": "^1.11.1",
+		"@actions/github": "^6.0.0",
+		"@linear/sdk": "^33.0.0"
+	},
+	"devDependencies": {
+		"@vercel/ncc": "^0.33.4",
+		"husky": "^9.1.7",
+		"prettier": "^3.3.3",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3"
+	}
 }
